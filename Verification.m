@@ -75,16 +75,16 @@ end
 % r_1
 
 for j = 1:4
-    r_bold_dq_k1(j,:) = diff(r_bold(1,:),q(j))
-    r_bold_dq_k2(j,:) = diff(r_bold(2,:),q(j))
+    r_bold_dq_k1(j,:) = diff(r_bold(1,:),q(j));
+    r_bold_dq_k2(j,:) = diff(r_bold(2,:),q(j));
 end
 
-r_bold_dq = [r_bold_dq_k1 ; r_bold_dq_k2]
+r_bold_dq = [r_bold_dq_k1 ; r_bold_dq_k2];
 
 
 % Generalized forces
 for j = 1:length(q)
-    Q(j,:) = F_bold(1,:).*r_bold_dq_k1(j,:) + F_bold(2,:).*r_bold_dq_k2(j,:) 
+    Q(j,:) = F_bold(1,:).*r_bold_dq_k1(j,:) + F_bold(2,:).*r_bold_dq_k2(j,:);
 end
 
 
@@ -113,5 +113,5 @@ LagEq_homo = ddL_dq_dot_dt - dL_dq + dD_dq_dot;
 
 
 % with Q_j
-LagEq = ddL_dq_dot_dt - dL_dq + dD_dq_dot - Q;
+% LagEq = ddL_dq_dot_dt - dL_dq + dD_dq_dot - Q;
 
