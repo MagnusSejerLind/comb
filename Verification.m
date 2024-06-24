@@ -23,7 +23,7 @@ q_dot = [phi_1_dot, phi_2_dot, theta_1_dot, theta_2_dot];
 
 % Forces
 F_i = [-C*rho/2*U^2*(theta_1-1/U*phi_1_dot*gamma_1)*(a+b)*l_1, ...
--C*rho/2*U^2*(theta_2-1/U*(phi_1_dot*l_1+phi_2_dot*gamma_2)*(a+b)*l_2];
+-C*rho/2*U^2*(theta_2-1/U*(phi_1_dot*l_1+phi_2_dot*gamma_2))*(a+b)*l_2];
 
 f_trans = [-sin(theta_1), -sin(theta_1), cos(theta_1)*cos(phi_1);
             -sin(theta_2), -sin(theta_2), cos(theta_2)*cos(phi_2)] ;
