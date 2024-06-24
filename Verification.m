@@ -8,25 +8,22 @@ syms rho U gamma_1 gamma_2 xi
 
 %% Equations
 
-% Kinetic energy
-    % Modified
+% Kinetic energy (Modified)
 T = m*(1/3*l_1*(a^3+b^3)*theta_1_dot^2 + 1/3*l_1^3*(a+b)*phi_1_dot^2 - 1/2*l_1^2*(a^2-b^2)*theta_1_dot*phi_1_dot + ...
     l_1^2*l_2*(a+b)*phi_1_dot^2 + 1/3*l_2^3*(a+b)*phi_2_dot^2 + 1/3*l_2*(a^3+b^3)*theta_2_dot^2 + ...
     l_1*l_2^2*(a+b)*phi_1_dot*phi_2_dot - l_1*l_2*(a^2-b^2)*phi_1_dot*theta_2_dot - 1/2*l_2^2*(a^2-b^2)*phi_2_dot*theta_2_dot   ...
     );
 
-
 % Potential energy
 V = 1/2*( k_1*phi_1^2 + g_1*theta_1^2 + k_2*phi_2^2 + g_2*theta_2^2 );
-
 
 % Generalized coordinates
 q = [phi_1, phi_2, theta_1, theta_2];
 q_dot = [phi_1_dot, phi_2_dot, theta_1_dot, theta_2_dot];
 
-
 % Forces
-F_i = [-C*rho/2*U^2*(theta_1-1/U*phi_1_dot*gamma_1)*(a+b)*l_1, -C*rho/2*U^2*(theta_1-1/U*phi_1_dot*gamma_1+phi_2_dot*gamma_2)*(a+b)*l_1];
+F_i = [-C*rho/2*U^2*(theta_1-1/U*phi_1_dot*gamma_1)*(a+b)*l_1, ...
+-C*rho/2*U^2*(theta_2-1/U*phi_1_dot*gamma_1+phi_2_dot*gamma_2)*(a+b)*l_1];
 
 f_trans = [-sin(theta_1), -sin(theta_1), cos(theta_1)*cos(phi_1);
             -sin(theta_2), -sin(theta_2), cos(theta_2)*cos(phi_2)] ;
