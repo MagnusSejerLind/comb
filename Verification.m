@@ -32,7 +32,7 @@ for i = 1:length(F_i)
 end
 
 % Position vectors
-r_1 = [-xi*cos(theta_1), gamma_1*cos(phi_1), x*1i*sin(theta_1)+gamma_1*sin(phi_1)];
+r_1 = [-xi*cos(theta_1), gamma_1*cos(phi_1), -x*1i*sin(theta_1)+gamma_1*sin(phi_1)];
 r_2 = [-xi*cos(theta_2), l_1*cos(phi_1)+gamma_2*cos(phi_2), -xi*sin(theta_2)+l_1*sin(phi_1)+gamma_2*sin(phi_2)];
 
 r_bold = r_1;
