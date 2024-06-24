@@ -14,17 +14,20 @@ T = m*(1/3*l_1*(a^3+b^3)*theta_1_dot + 1/3*l_1^3*(a+b)*phi_1_dot^2 - 1/2*l_1^2*(
     l_1^2*l_2*(a+b)*phi_1_dot^2 + 1/3*l_2^3*(a+b)*phi_2_dot^2 + 1/3*l_2*(a^3+b^3)*theta_2_dot^2 + ...
     l_1*l_2*(a+b)*phi_1_dot*phi_2_dot - l_1*l_2*(a^2-b^2)*phi_2_dot*theta_2_dot - 1/2*l_2^2*(a^2-b^2)*phi_2_dot*theta_2_dot   ...
     );
+
     % Original
 % T_original = m*(1/3*l_1*(a^3+b^3)*theta_1_dot + 1/3*l_1^3*(a+b)*phi_1_dot^2 - 1/2*l_1^2*(a^2-b^2)*theta_1_dot*phi_1_dot + ...
 % l_1^2*l_2*(a+b)*phi_1_dot^2 + 1/3*l_2^3*(a+b)*phi_2_dot^2 + 1/3*l_2*(a^3+b^3)*theta_1_dot^2 + ...
 % l_1*l_2*(a+b)*phi_1_dot*phi_2_dot - l_1*l_2*(a^2-b^2)*phi_2_dot*theta_2_dot - 1/2*l_2^2*(a^2-b^2)*phi_2_dot*theta_2_dot   ...
 % );
+% T = T_original;
+
 
 % Potential energy
 V = 1/2*( k_1*phi_1^2 + g_1*theta_1^2 + k_2*phi_2^2 + g_2*theta_2^2 );
 
 
-
+% Generalized coordinates
 q = [phi_1, phi_2, theta_1, theta_2];
 q_dot = [phi_1_dot, phi_2_dot, theta_1_dot, theta_2_dot];
 
@@ -38,6 +41,7 @@ for i = 1:length(F_i)
     F_bold(i,:) = F_i(i).*f_trans(i,:);
 end
 
+% Position vectors
 r_1 = [-xi*cos(theta_1), gamma_1*cos(phi_1), x*1i*sin(theta_1)+gamma_1*sin(phi_1)];
 r_2 = [-xi*cos(theta_2), l_1*cos(phi_1)+gamma_2*cos(phi_2), -xi*sin(theta_2)+l_1*sin(phi_1)+gamma_2*sin(phi_2)];
 
@@ -52,6 +56,7 @@ D = 1/2*( c_1*phi_1_dot^2 + d_1*theta_1_dot^2 + c_2*phi_2_dot^2 + d_2*theta_2_do
 % Langrian
 L = T - V;
 
+% Derivatives
 for j = 1:4
     % Partial derivative of Lagrian with respect to d(q_i)/dt
     dL_dq_dot(j) = diff(L,q_dot(j));
@@ -64,29 +69,15 @@ for j = 1:4
     % Partial derivative of damping with respect to d(q_i)/dt
     dD_dq_dot(j) = diff(D,q_dot(j));
 
-    % Derivative in eq (9)
-    % for k = 1:length(r_bold)
-    %     r_bold_dq(j) = diff(r_bold(k),q(j));
-    % end
 end
 
 
-
-% r_1
-
+% Express generalized forces Q_j
 for j = 1:4
     r_bold_dq_k1(j,:) = diff(r_bold(1,:),q(j));
     r_bold_dq_k2(j,:) = diff(r_bold(2,:),q(j));
 end
-
 r_bold_dq = [r_bold_dq_k1 ; r_bold_dq_k2];
-
-
-% Generalized forces
-% for j = 1:length(q)
-%     Q(j,:) = F_bold(1,:).*r_bold_dq_k1(j,:) + F_bold(2,:).*r_bold_dq_k2(j,:);
-% end
-
 
 for j = 1:length(q)
     Q(j,:) = dot(F_bold(1,:)', r_bold_dq_k1(j,:)) + dot(F_bold(2,:)', r_bold_dq_k2(j,:));
@@ -108,12 +99,23 @@ ddL_dq_dot_dt = [m*(0.6667*l_1^3*phi_1_dotdot*(a + b) - 0.5000*l_1^2*theta_1_dot
 
 %% Lagrange equation
 
-% Q excluded for now!!!
+% Q excluded 
 LagEq_homo = ddL_dq_dot_dt - dL_dq + dD_dq_dot;
-
-
 
 
 % with Q_j
 LagEq = ddL_dq_dot_dt - dL_dq + dD_dq_dot - Q.';
+
+%%
+
+EOM_1 = LagEq(:,1);
+EOM_2 = LagEq(:,2);
+EOM_3 = LagEq(:,3);
+EOM_4 = LagEq(:,4);
+
+
+
+
+
+
 
