@@ -1,7 +1,6 @@
 clc,clear,close all
 set(0,'defaultTextInterpreter','latex');
 %%
-
 n = 1000;
 u_vec = linspace(0,2.5,n);  % Velocity range
 
@@ -9,17 +8,16 @@ dof = 4;
 alpha = zeros(n,2*dof);
 omega = zeros(n,2*dof);
 
-
 for i_case = 1:2
     for i = 1:length(u_vec)
         u = u_vec(i);
 
         %% Non-dimensional parameters
+        c_hat = 0.5; % External damping
         l = 1; a = 0.25; b = 0.25; 
         gamma_1 = 0.5; gamma_2 = 0.5; xi = 0.125; 
         chi = 1.0; 
         c_in_1 = 0.1; c_in_2 = c_in_1; d_in_1 = c_in_1; d_in_2 = c_in_1;    % Internal damping
-        c_hat = 0.5; % External damping
         
         % Spring constants
         if i_case == 1
@@ -34,7 +32,7 @@ for i_case = 1:2
 
         %%
 
-        % Mass, damping, stiffness matrices
+        % Mass, damping, stiffness matrix
         M = [2*(1/3+l) l^2 -1/2*(a-b) -l*(a-b);
             l^2 2/3*l^3 0 -1/2*l^2*(a-b);
             -1/2*(a-b) 0 2/3*(a^2+b^2-a*b) 0;
@@ -50,17 +48,15 @@ for i_case = 1:2
             0 0 g_1 - chi * u ^ 2 * xi * (a + b) 0;
             0 0 0 g_2 - chi * u ^ 2 * xi * l * (a + b)];
 
-
         %% Express A matrix
         A = [zeros(dof) eye(dof) ; -M\K -M\C];
 
-        %% Flutter stability
+        %% Eigenvalue problem
         [Psi,Lambda]=eig(A);    % Eigenvalue problem
         lambda=diag(Lambda);    % Eigenvalues extracted
 
         alpha(i,:) = sort(real(lambda));    % Real part
         omega(i,:) = sort(imag(lambda));    % Imaginary part
-
 
 
     end
@@ -75,7 +71,6 @@ for i_case = 1:2
     grid
     yline(0,'r',LineWidth=1)
 
-
     figure()
     plot(u_vec,omega,'k',LineWidth=1.75)
     ylabel('$\omega$',Rotation=360)
@@ -83,7 +78,6 @@ for i_case = 1:2
     title("Case",i_case)
     grid
     yline(0,'r',LineWidth=1)
-
 
 
 end
