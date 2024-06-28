@@ -40,10 +40,6 @@ r_2 = [-xi*cos(theta_2), l_1*cos(phi_1)+gamma_2*cos(phi_2), -xi*sin(theta_2)+l_1
 r_bold = r_1;
 r_bold(2,:) = r_2;
 
-% Normal velocity
-% v_n_1 = theta_1_dot*x + phi_1_dot*y;
-% v_n_2 = theta_2_dot*x + phi_1_dot*l_1 + phi_2_dot*y;
-
 % External damping
 d_ex_1 = c_hat*(-1/2*theta_1_dot^2*(-a^2+b^2)*l_1 + 1/2*phi_1_dot^2*(b+a)*l_1^2);
 d_ex_2 = c_hat*(phi_1_dot^2*l_1*(b+a)*l_2 + 1/2*theta_2_dot^2*(-a^2+b^2)*l_2 + 1/2*phi_2_dot^2*(b+a)*l_2^2 );
@@ -84,7 +80,6 @@ for j = 1:length(q)
 end
 
 
-
 % Temporal derivative of partial derivative of Lagrian with respect to d(q_i)/dt
 %%%%%%%%%%%%% OBS MANUAL %%%%%%%%%%%%%%%
 % phi_dot->phi_dotdot - likewise for theta
@@ -96,19 +91,16 @@ m*(0.6667*l_1*theta_1_dotdot*(a^3 + b^3) - 0.5000*l_1^2*phi_1_dotdot*(a^2 - b^2)
 %%%%%
 
 
-%% Lagrange equation
+%% Lagrange's equation
 
-% Q excluded 
+% Q_j excluded 
 LagEq_homo = ddL_dq_dot_dt - dL_dq + dD_dq_dot;
-
 
 % with Q_j
 LagEq = ddL_dq_dot_dt - dL_dq + dD_dq_dot - Q.';
 
-%%
-
+%% Equations of motion
 EOM_1 = LagEq(:,1);
 EOM_2 = LagEq(:,2);
 EOM_3 = LagEq(:,3);
 EOM_4 = LagEq(:,4);
-
