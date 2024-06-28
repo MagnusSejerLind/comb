@@ -41,12 +41,12 @@ r_bold = r_1;
 r_bold(2,:) = r_2;
 
 % Normal velocity
-v_n_1 = theta_1_dot*x + phi_1_dot*y;
-v_n_2 = theta_2_dot*x + phi_1_dot*l_1 + phi_2_dot*y;
+% v_n_1 = theta_1_dot*x + phi_1_dot*y;
+% v_n_2 = theta_2_dot*x + phi_1_dot*l_1 + phi_2_dot*y;
 
 % External damping
-d_ex_1 = c_hat*v_n_1*(b+a)*l_1;
-d_ex_2 = c_hat*v_n_2*(b+a)*l_2;
+d_ex_1 = c_hat*(-1/2*theta_1_dot*(-a^2+b^2)*l_1 + 1/2*phi_1_dot*(b+a)*l_1^2);
+d_ex_2 = c_hat*(phi_1_dot*l_1*(b+a)*l_2 + 1/2*theta_2_dot*(-a^2+b^2)*l_2 + 1/2*phi_2_dot*(b+a)*l_2^2 );
 
 % Damping
 D = 1/2* (c_in_1*phi_1_dot^2 + d_in_1*theta_1_dot^2 + d_ex_1 + c_in_2*phi_2_dot^2 + d_in_2*theta_2_dot^2 + d_ex_2);
