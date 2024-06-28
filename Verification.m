@@ -71,7 +71,6 @@ for j = 1:length(q)
 end
 
 
-
 % Temporal derivative of partial derivative of Lagrian with respect to d(q_i)/dt
 %%%%%%%%%%%%% OBS MANUAL %%%%%%%%%%%%%%%
 % phi_dot->phi_dotdot - likewise for theta
@@ -83,21 +82,16 @@ m*(0.6667*l_1*theta_1_dotdot*(a^3 + b^3) - 0.5000*l_1^2*phi_1_dotdot*(a^2 - b^2)
 %%%%%
 
 
-%% Lagrange equation
+%% Lagrange's equation
 
-% Q excluded 
+% Q_j excluded 
 LagEq_homo = ddL_dq_dot_dt - dL_dq + dD_dq_dot;
-
 
 % with Q_j
 LagEq = ddL_dq_dot_dt - dL_dq + dD_dq_dot - Q.';
 
-%%
-
+%% Equations of motion
 EOM_1 = LagEq(1);
 EOM_2 = LagEq(2);
 EOM_3 = LagEq(3);
 EOM_4 = LagEq(4);
-
-
-
