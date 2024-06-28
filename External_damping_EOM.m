@@ -7,7 +7,7 @@ syms c_in_1 c_in_2 d_in_1 d_in_2    % Internal damping
 syms c_ex_1 c_ex_2 d_ex_1 d_ex_2    % External damping
 syms C  % Proportional constant
 syms rho U gamma_1 gamma_2 xi
-
+syms c_hat v_n_1 v_n_2
 %% Equations
 
 % Kinetic energy (Modified)
@@ -34,15 +34,22 @@ for i = 1:length(F_i)
 end
 
 % Position vectors
-r_1 = [-xi*cos(theta_1), gamma_1*cos(phi_1), -x*1i*sin(theta_1)+gamma_1*sin(phi_1)];
+r_1 = [-xi*cos(theta_1), gamma_1*cos(phi_1), -xi*sin(theta_1)+gamma_1*sin(phi_1)];
 r_2 = [-xi*cos(theta_2), l_1*cos(phi_1)+gamma_2*cos(phi_2), -xi*sin(theta_2)+l_1*sin(phi_1)+gamma_2*sin(phi_2)];
 
 r_bold = r_1;
 r_bold(2,:) = r_2;
 
+% Normal velocity
+v_n_1 = theta_1_dot*x + phi_1_dot*y;
+v_n_2 = theta_2_dot*x + phi_1_dot*l_1 + phi_2_dot*y;
+
+% External damping
+d_ex_1 = c_hat*v_n_1*(b+a)*l_1;
+d_ex_2 = c_hat*v_n_2*(b+a)*l_2;
+
 % Damping
-D = 1/2*( (c_in_1 + c_ex_1)*phi_1_dot^2 + (d_in_1 + d_ex_1)*theta_1_dot^2 ...
-    + (c_in_2 + c_ex_2)*phi_2_dot^2 + (d_in_2 + d_ex_2)*theta_2_dot^2 );
+D = 1/2* (c_in_1*phi_1_dot^2 + d_in_1*theta_1_dot^2 + d_ex_1 + c_in_2*phi_2_dot^2 + d_in_2*theta_2_dot^2 + d_ex_2);
 
 %% Set up the Lagrange equation
 
