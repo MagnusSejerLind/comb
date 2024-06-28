@@ -19,7 +19,7 @@ for i_case = 1:2
         gamma_1 = 0.5; gamma_2 = 0.5; xi = 0.125; 
         chi = 1.0; 
         c_in_1 = 0.1; c_in_2 = c_in_1; d_in_1 = c_in_1; d_in_2 = c_in_1;    % Internal damping
-        c_hat = 0.1    % External damping
+        c_hat = 0.5; % External damping
         
         % Spring constants
         if i_case == 1
