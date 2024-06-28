@@ -40,11 +40,11 @@ for i_case = 1:2
             -1/2*(a-b) 0 2/3*(a^2+b^2-a*b) 0;
             -l*(a-b) -1/2*l^2*(a-b) 0 2/3*l*(a^2+b^2-a*b)];
 
-        C = [c_in_1 - chi * u * (gamma_1 + l) * (a + b) -chi * u * gamma_2 * l * (a + b) 0 0;
-            -chi * u * gamma_2 * l * (a + b) c_in_2 - chi * u * gamma_2 ^ 2 * l * (a + b) 0 0;
-            chi * u * gamma_1 * xi * (a + b) 0 d_in_1 0;
-            u * chi * xi * l * (a + b) u * chi * xi * l ^ 2 * gamma_2 * (a + b) 0 d_in_2;];
-
+        C = [c_in_1 - chi * u * (gamma_1 + l) * (a + b), -chi * u * gamma_2 * l * (a + b), 0, 0;
+            -chi * u * gamma_2 * l * (a + b), c_in_2 - chi * u * gamma_2 ^ 2 * l * (a + b), 0, 0;
+            chi * u * gamma_1 * xi * (a + b), 0, d_in_1, 0;
+            u * chi * xi * l * (a + b), u * chi * xi * l ^ 2 * gamma_2 * (a + b), 0, d_in_2;];
+        
         K = [k_1 0 chi * u ^ 2 * gamma_1 * (a + b) chi * u ^ 2 * l * (a + b);
             0 k_2 0 chi * u ^ 2 * l * gamma_2 * (a + b);
             0 0 g_1 - chi * u ^ 2 * xi * (a + b) 0;
