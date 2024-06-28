@@ -1,5 +1,4 @@
 clc,clear,close all
-
 %%
 syms m x y a b l_1 l_2 phi_1 phi_1_dot phi_1_dotdot phi_2 phi_2_dot phi_2_dotdot theta_1 theta_1_dot theta_1_dotdot theta_2 theta_2_dot theta_2_dotdot 
 syms k_1 k_2 g_1 g_2 c_1 c_2 d_1 d_2
@@ -32,7 +31,6 @@ for i = 1:length(F_i)
 end
 
 % Position vectors
-%r_1 = [-xi*cos(theta_1), gamma_1*cos(phi_1), -x*1i*sin(theta_1)+gamma_1*sin(phi_1)];
 r_1 = [-xi*cos(theta_1), gamma_1*cos(phi_1), -xi*sin(theta_1)+gamma_1*sin(phi_1)];
 r_2 = [-xi*cos(theta_2), l_1*cos(phi_1)+gamma_2*cos(phi_2), -xi*sin(theta_2)+l_1*sin(phi_1)+gamma_2*sin(phi_2)];
 
@@ -52,16 +50,13 @@ for j = 1:4
     % Partial derivative of Lagrian with respect to d(q_i)/dt
     dL_dq_dot(j) = diff(L,q_dot(j));
 
-
     % Partial derivative of Lagrian with respect to q_i
     dL_dq(j) = diff(L,q(j));
-
 
     % Partial derivative of damping with respect to d(q_i)/dt
     dD_dq_dot(j) = diff(D,q_dot(j));
 
 end
-
 
 % Express generalized forces Q_j
 for j = 1:4
@@ -70,6 +65,7 @@ for j = 1:4
 end
 r_bold_dq = [r_bold_dq_k1 ; r_bold_dq_k2];
 
+% Generalized forces
 for j = 1:length(q)
     Q(j,:) = dot(F_bold(1,:)', r_bold_dq_k1(j,:)) + dot(F_bold(2,:)', r_bold_dq_k2(j,:));
 end
@@ -98,8 +94,10 @@ LagEq = ddL_dq_dot_dt - dL_dq + dD_dq_dot - Q.';
 
 %%
 
-EOM_1 = LagEq(:,1);
-EOM_2 = LagEq(:,2);
-EOM_3 = LagEq(:,3);
-EOM_4 = LagEq(:,4);
+EOM_1 = LagEq(1);
+EOM_2 = LagEq(2);
+EOM_3 = LagEq(3);
+EOM_4 = LagEq(4);
+
+
 
