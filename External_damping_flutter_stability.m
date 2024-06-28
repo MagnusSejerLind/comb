@@ -18,23 +18,8 @@ for i_case = 1:2
         l = 1; a = 0.25; b = 0.25; 
         gamma_1 = 0.5; gamma_2 = 0.5; xi = 0.125; 
         chi = 1.0; 
-
-
-        % internal damping
-        c_in_1 = 0.1; c_in_2 = c_in_1; d_in_1 = c_in_1; d_in_2 = c_in_1;
-
-
-%%%%%%%%%%%%%% insert external damping expression here %%%%%%%%%%%%%%%%%%
-        % External damping
-        c_ex_1 = u*(a+b)*l; c_ex_2 = c_ex_1; d_ex_1 = c_ex_1; d_ex_2 = c_ex_1;
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-        % Combined damping terms
-        c_1 = c_in_1+c_ex_1; c_2 = c_1; d_1 = c_1; d_2 = c_1;
+        c_in_1 = 0.1; c_in_2 = c_in_1; d_in_1 = c_in_1; d_in_2 = c_in_1;    % Internal damping
+        c_hat = 0.1    % External damping
         
         % Spring constants
         if i_case == 1
@@ -55,10 +40,10 @@ for i_case = 1:2
             -1/2*(a-b) 0 2/3*(a^2+b^2-a*b) 0;
             -l*(a-b) -1/2*l^2*(a-b) 0 2/3*l*(a^2+b^2-a*b)];
 
-        C = [c_1 - chi * u * (gamma_1 + l) * (a + b) -chi * u * gamma_2 * l * (a + b) 0 0;
-            -chi * u * gamma_2 * l * (a + b) c_2 - chi * u * gamma_2 ^ 2 * l * (a + b) 0 0;
-            chi * u * gamma_1 * xi * (a + b) 0 d_1 0;
-            u * chi * xi * l * (a + b) u * chi * xi * l ^ 2 * gamma_2 * (a + b) 0 d_2;];
+        C = [c_in_1 - chi * u * (gamma_1 + l) * (a + b) -chi * u * gamma_2 * l * (a + b) 0 0;
+            -chi * u * gamma_2 * l * (a + b) c_in_2 - chi * u * gamma_2 ^ 2 * l * (a + b) 0 0;
+            chi * u * gamma_1 * xi * (a + b) 0 d_in_1 0;
+            u * chi * xi * l * (a + b) u * chi * xi * l ^ 2 * gamma_2 * (a + b) 0 d_in_2;];
 
         K = [k_1 0 chi * u ^ 2 * gamma_1 * (a + b) chi * u ^ 2 * l * (a + b);
             0 k_2 0 chi * u ^ 2 * l * gamma_2 * (a + b);
